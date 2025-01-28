@@ -5,7 +5,7 @@ export class DateFormatter {
     day: '2-digit',
   });
 
-  static getDDMMYYYY(date: Date): string {
+  static getDDMMMMYYYY(date: Date): string {
     return this.formatter.format(date);
   }
 }

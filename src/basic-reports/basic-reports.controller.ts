@@ -7,16 +7,13 @@ export class BasicReportsController {
   constructor(private readonly basicReportsService: BasicReportsService) {}
 
   @Get()
-  hello(@Res() response: Response) {
+  async hello(@Res() response: Response) {
     const pdfDoc = this.basicReportsService.hello();
 
     response.setHeader('Content-Type', 'application/pdf');
-
+    pdfDoc.info.Title = 'Hola-Mundo';
     pdfDoc.pipe(response);
-
     pdfDoc.end();
-
-    return pdfDoc;
   }
 
   @Get('employment-letter')
@@ -24,9 +21,9 @@ export class BasicReportsController {
     const pdfDoc = this.basicReportsService.employmentLetter();
 
     response.setHeader('Content-Type', 'application/pdf');
+    pdfDoc.info.Title = 'Employment-Letter';
     pdfDoc.pipe(response);
     pdfDoc.end();
-    return pdfDoc;
   }
 
   @Get('employment-letter/:employeeId')
@@ -38,8 +35,19 @@ export class BasicReportsController {
       await this.basicReportsService.employmentLetterById(+employeeId);
 
     response.setHeader('Content-Type', 'application/pdf');
+    pdfDoc.info.Title = 'Employment-Letter';
     pdfDoc.pipe(response);
     pdfDoc.end();
-    return pdfDoc;
+  }
+
+  //countries
+  @Get('countries')
+  async getCountriesReport(@Res() response: Response) {
+    const pdfDoc = await this.basicReportsService.getCountries();
+
+    response.setHeader('Content-Type', 'application/pdf');
+    pdfDoc.info.Title = 'Countries-Report';
+    pdfDoc.pipe(response);
+    pdfDoc.end();
   }
 }

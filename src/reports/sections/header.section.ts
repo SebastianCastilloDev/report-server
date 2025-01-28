@@ -10,7 +10,7 @@ const logo: Content = {
 };
 
 const currentDate: Content = {
-  text: DateFormatter.getDDMMYYYY(new Date()),
+  text: DateFormatter.getDDMMMMYYYY(new Date()),
   alignment: 'right',
   margin: [20, 30],
   width: 150,
