@@ -1,11 +1,16 @@
-import type { StyleDictionary, TDocumentDefinitions } from 'pdfmake/interfaces';
+import type {
+  Content,
+  StyleDictionary,
+  TDocumentDefinitions,
+} from 'pdfmake/interfaces';
+import { DateFormatter } from 'src/helpers';
 
 const style: StyleDictionary = {
   header: {
     fontSize: 22,
     bold: true,
     alignment: 'center',
-    margin: [0, 0, 0, 20],
+    margin: [0, 50, 0, 20],
   },
   body: {
     alignment: 'justify',
@@ -15,11 +20,35 @@ const style: StyleDictionary = {
     fontSize: 14,
     bold: true,
   },
+  footer: {
+    fontSize: 10,
+    alignment: 'center',
+    margin: [0, 0, 0, 20],
+  },
+};
+
+const logo: Content = {
+  image: 'src/assets/tucan-code-logo.png',
+  width: 100,
+  height: 100,
+  alignment: 'center',
+  margin: [0, 0, -20, 20],
 };
 
 export const getEmploymentLetterReport = (): TDocumentDefinitions => {
   const docDefinition: TDocumentDefinitions = {
     styles: style,
+    pageMargins: [40, 60, 40, 60],
+    header: {
+      columns: [
+        logo,
+        {
+          text: DateFormatter.getDDMMYYYY(new Date()),
+          alignment: 'right',
+          margin: [20, 20, 50, 20],
+        },
+      ],
+    },
     content: [
       {
         text: 'CONSTANCIA DE EMPLEO',
@@ -54,6 +83,10 @@ Esta constancia se expide a solicitud del interesado para los fines que consider
         style: 'signature',
       },
     ],
+    footer: {
+      text: 'Este documento es una constancia de empleo y no representa un contrato laboral.',
+      style: 'footer',
+    },
   };
 
   return docDefinition;
