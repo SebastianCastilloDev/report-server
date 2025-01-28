@@ -7,7 +7,11 @@ import {
 } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { PrinterService } from 'src/printer/printer.service';
-import { getEmploymentLetterReport, getHelloWorldReport } from 'src/reports';
+import {
+  getEmploymentLetterByIdReport,
+  getEmploymentLetterReport,
+  getHelloWorldReport,
+} from 'src/reports';
 
 @Injectable()
 export class BasicReportsService extends PrismaClient implements OnModuleInit {
@@ -47,7 +51,16 @@ export class BasicReportsService extends PrismaClient implements OnModuleInit {
       throw new NotFoundException('Employee not found');
     }
 
-    const docDefinition = getEmploymentLetterReport();
+    const docDefinition = getEmploymentLetterByIdReport({
+      employerName: 'Sebastian',
+      employerPosition: 'Software Developer',
+      employeeName: employee.name,
+      employeePosition: employee.position,
+      employeeStartDate: employee.start_date,
+      employeeHours: employee.hours_per_day,
+      employeeWorkSchedule: employee.work_schedule,
+      employerCompany: 'Tucan Code',
+    });
 
     const pdfDoc = this.printerService.createPdf(docDefinition, {});
 
