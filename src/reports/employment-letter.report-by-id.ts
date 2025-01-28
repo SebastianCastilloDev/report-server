@@ -23,7 +23,7 @@ const style: StyleDictionary = {
   },
 };
 
-export const getEmploymentLetterReport = (): TDocumentDefinitions => {
+export const getEmploymentLetterByIdReport = (): TDocumentDefinitions => {
   const docDefinition: TDocumentDefinitions = {
     styles: style,
     pageMargins: [40, 60, 40, 60],
